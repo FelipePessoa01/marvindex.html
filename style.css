@@ -73,11 +73,16 @@ ul {
 }
 
 .btn-red {
-    background-color: var(--red-primary);
+    background-color: var(--red-hover);
     color: var(--text-light);
     border: none;
 }
-.btn-red:hover { background-color: var(--red-hover); }
+.btn-red:hover { 
+    transition: all 0.7s ease;
+    transform: translateY(-1px) scale(1);
+    background-color: var(--dark-blue); 
+    box-shadow: 0 1 px 35px rgba(0, 0, 0, 0.73);
+}
 
 .btn-white {
     background-color: var(--text-light);
@@ -88,7 +93,7 @@ ul {
 
 /* NAVBAR */
 .navbar {
-    background-color: var(--dark-blue);
+    background-color: var(--bg-light);
     padding: 15px 0;
     position: sticky;
     top: 0;
@@ -115,21 +120,25 @@ ul {
 }
 
 .nav-links a {
-    color: var(--text-light);
+    color: var(--dark-blue);
     font-size: 1rem;
     font-weight: 500;
     transition: color 0.3s ease;
 }
 
 .nav-links a:hover {
-    color: var(--red-primary);
+    color: var(--red-hover);
+}
+
+.nav-links a ul:hover {
+    color: var(--bg-light);
 }
 
 .mobile-menu-icon {
     display: none;
     background: none;
     border: none;
-    color: var(--text-light);
+    color: var(--dark-blue);
     font-size: 1.8rem;
     cursor: pointer;
     z-index: 1100;
@@ -257,7 +266,7 @@ ul {
 .section-subtitle {
     font-size: 0.85rem;
     font-weight: 600;
-    color: var(--red-primary);
+    color: var(--red-primars);
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 10px;
@@ -311,13 +320,13 @@ ul {
 
 /* PRODUTOS */
 .produtos {
-    background: var(--dark-blue);
+    background-color: #b40505dd;
     color: var(--text-light);
     padding: 80px 0;
     text-align: center;
 }
 
-.produtos .section-subtitle { color: var(--red-primary); }
+.produtos .section-subtitle { color: var(--bg-light); }
 
 .produtos h2 {
     font-size: 2.5rem;
@@ -341,8 +350,8 @@ ul {
     padding: 25px;
     border-radius: 8px;
     transition: transform 0.3s;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.356);
+    border: 1px solid rgba(255, 255, 255, 0.318);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.97);
 }
 
 .card-produto:hover { transform: translateY(-5px); }
