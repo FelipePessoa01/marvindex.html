@@ -1,0 +1,804 @@
+/* Variáveis de Cores e Fontes */
+:root {
+    --red-primary: #d32f2f;
+    --red-hover: #b71c1c;
+    --red-light: #fbe9e9;
+    --dark-blue: #152230;
+    --dark-blue-card: #1c2b3c;
+    --bg-light: #f8f9fa;
+    --text-dark: #333;
+    --text-gray: #666;
+    --text-light: #fff;
+
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Inter', sans-serif;
+}
+
+/* Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-sans);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+/* Estado inicial: Invisível e deslocado para baixo */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+/* Estado final: Quando a classe 'active' for adicionada pelo JS */
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Opcional: Efeito vindo da esquerda para imagens ou cards específicos */
+
+
+
+
+/* NAVBAR (CABEÇALHO) */
+.navbar {
+    background-color: var(--dark-blue);
+    /* Fundo escuro igual ao rodapé */
+    padding: 15px 0;
+    position: sticky;
+    /* Mantém o menu fixo no topo ao rolar a página */
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* No mobile, o menu começa escondido para a direita */
+@media (max-width: 992px) {
+    .mobile-menu-icon {
+        display: block;
+        /* Mostra o ícone no mobile */
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.8rem;
+        cursor: pointer;
+        z-index: 1100;
+    }
+
+    .nav-links {
+        display: flex;
+        /* Muda de 'none' para 'flex' */
+        position: fixed;
+        top: 0;
+        right: -100%;
+        /* Escondido */
+        width: 70%;
+        height: 100vh;
+        background-color: var(--dark-blue);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: 0.4s ease-in-out;
+        z-index: 1000;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .nav-links.active {
+        right: 0;
+        /* Desliza para dentro */
+    }
+
+    .nav-links li {
+        margin: 15px 0;
+    }
+
+    .menu-overlay.active {
+        display: block !important;
+        /* Garante que exista */
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+/* Estilos para o Botão Hambúrguer (Escondido por padrão) */
+.mobile-menu-icon {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 1.8rem;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+/* Overlay para escurecer o fundo */
+.menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease;
+}
+
+/* Responsividade para Telas Pequenas (até 992px) */
+@media (max-width: 992px) {
+    .nav-links {
+        /* Em vez de display: none, usamos fixed e jogamos para fora da tela */
+        display: flex !important;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        /* Totalmente escondido à direita */
+        width: 75%;
+        height: 100vh;
+        background-color: var(--dark-blue);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+        z-index: 1000;
+        box-shadow: -10px 0 20px rgba(0, 0, 0, 0.5);
+
+        /* A MÁGICA DA TRANSIÇÃO */
+        transition: right 0.4s ease-in-out, opacity 0.3s ease;
+        opacity: 0;
+    }
+
+    /* Quando o JS colocar a classe 'active' */
+    .nav-links.active {
+        right: 0;
+        /* Desliza para a posição visível */
+        opacity: 1;
+    }
+
+    /* Efeito suave nos links (opcional) */
+    .nav-links li {
+        transform: translateX(50px);
+        transition: 0.6s ease-in-out;
+        opacity: 0;
+    }
+
+    .nav-links.active li {
+        transform: translateX(0);
+        opacity: 1;
+        /* Pequeno atraso para cada link aparecer um após o outro */
+        transition-delay: 0.1s;
+    }
+
+    .nav-links.active a {
+        color: white !important;
+        font-size: 1.3rem;
+        display: block;
+        padding: 10px;
+    }
+
+    /* 4. Ajuste o botão para ficar acima de tudo */
+    .mobile-menu-icon {
+        display: block;
+        z-index: 1100;
+        position: relative;
+    }
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo img {
+    max-height: 45px;
+    /* Controla a altura máxima da sua imagem */
+    width: auto;
+    display: block;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    /* Espaçamento entre os links */
+}
+
+.nav-links a {
+    color: var(--text-light);
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--red-primary);
+}
+
+.btn-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/* Responsividade do Cabeçalho para celulares */
+@media (max-width: 992px) {
+    .nav-links {
+        display: none;
+        /* Oculta os links em telas menores, ideal seria um menu hambúrguer aqui futuramente */
+    }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+
+
+.text-red {
+    color: var(--red-primary);
+}
+
+.font-serif {
+    font-family: var(--font-serif);
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.btn-red {
+    background-color: var(--red-primary);
+    color: var(--text-light);
+    border: none;
+}
+
+.btn-red:hover {
+    background-color: var(--red-hover);
+}
+
+.btn-white {
+    background-color: var(--text-light);
+    color: var(--dark-blue);
+    border: none;
+}
+
+.btn-white:hover {
+    background-color: #f0f0f0;
+}
+
+/* HEADER / HERO SECTION */
+.hero {
+    background: linear-gradient(to right, rgba(14, 23, 32, 0.9) 30%, rgba(158, 21, 19, 0.5)),
+        url(https://www.marvermelhoatacado.com.br/wp-content/uploads/2024/09/MVE-outubro-2024-institucional-banner-site-1170x586px.jpg) center/cover;
+    color: var(--text-light);
+    padding: 100px 0 0 0;
+    position: relative;
+    
+}
+
+.location-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    max-width: 600px;
+}
+
+.hero p {
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin-bottom: 40px;
+    color: #ccc;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 80px;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 40px;
+    background: rgba(21, 34, 48, 0.8);
+    padding: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat h3 {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    color: var(--red-primary);
+    margin-bottom: 5px;
+}
+
+.stat p {
+    font-size: 0.9rem;
+    margin: 0;
+    color: #ddd;
+}
+
+/* SOBRE NÓS */
+.sobre {
+    padding: 80px 0;
+    background: var(--bg-light);
+}
+
+.sobre .container {
+    display: flex;
+    gap: 60px;
+    align-items: center;
+}
+
+.sobre-img-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.sobre-img-wrapper img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgb(0, 0, 0);
+}
+
+.badge {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    background: var(--red-primary);
+    color: white;
+    padding: 30px 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(211, 47, 47, 0.4);
+}
+
+.badge h4 {
+    font-size: 2rem;
+    font-family: var(--font-serif);
+}
+
+.badge p {
+    font-size: 0.85rem;
+}
+
+.sobre-content {
+    flex: 1;
+}
+
+.section-subtitle {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--red-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.sobre-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.sobre-content p {
+    color: var(--text-gray);
+    margin-bottom: 30px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.feature-item {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.feature-icon {
+    background: var(--red-light);
+    color: var(--red-primary);
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.2rem;
+}
+
+.feature-text h5 {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.feature-text p {
+    font-size: 0.85rem;
+    color: var(--text-gray);
+    margin: 0;
+}
+
+/* PRODUTOS */
+.produtos {
+    background: var(--dark-blue);
+    color: var(--text-light);
+    padding: 80px 0;
+    text-align: center;
+}
+
+.produtos .section-subtitle {
+    color: var(--red-primary);
+}
+
+.produtos h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.produtos .container>p {
+    color: var(--bg-light);
+    margin: 0 auto 10px auto;
+}
+
+.produtos-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    text-align: left;
+}
+
+.card-produto {
+    background: var(--dark-blue-card);
+    padding: 25px;
+    border-radius: 8px;
+    transition: transform 0.3s;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.356);
+}
+
+.card-produto:hover {
+    transform: translateY(-5px);
+}
+
+.card-produto i {
+    color: var(--red-primary);
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    background: rgba(212, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.card-produto h4 {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.card-produto p {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+/* DIFERENCIAIS */
+.diferenciais {
+    padding: 80px 0;
+    background: var(--bg-light);
+    text-align: center;
+}
+
+.diferenciais h2 {
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+}
+
+.dif-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    text-align: left;
+}
+
+.card-dif {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid #eaeaea;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.356);
+}
+
+.card-dif .icon-box {
+    background: var(--red-primary);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.card-dif h4 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.card-dif p {
+    font-size: 0.9rem;
+    color: var(--text-gray);
+}
+
+/* CONTATO & FOOTER */
+/* SEÇÃO CONTATO E FOOTER ATUALIZADA */
+.contato-footer {
+    background: var(--dark-blue);
+    color: var(--text-light);
+    padding: 80px 0 30px 0;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 60px;
+    align-items: start;
+}
+
+.contato-info h2 {
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+    font-family: var(--font-serif);
+}
+
+.contato-desc {
+    color: #aaa;
+    margin-bottom: 35px;
+    max-width: 450px;
+    font-size: 1.05rem;
+}
+
+.contact-list {
+    padding: 0;
+}
+
+.contact-list li {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 25px;
+    align-items: center;
+}
+
+.contact-list i {
+    background: rgba(211, 47, 47, 0.15);
+    /* Fundo avermelhado suave */
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    /* Cantos arredondados (quadrado) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--red-primary);
+    flex-shrink: 0;
+    font-size: 1.2rem;
+}
+
+.contact-list .label {
+    font-size: 0.85rem;
+    color: #888;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.contact-list .val {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.footer-right {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Caixa de Visita Estilizada */
+.visit-box {
+    background: var(--dark-blue-card);
+    padding: 60px 40px;
+    margin-top: 20px;
+    border-radius: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.356);
+}
+
+.visit-icon {
+    background: rgba(211, 47, 47, 0.1);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--red-primary);
+    font-size: 2rem;
+    margin-bottom: 25px;
+    border: 1px solid rgba(211, 47, 47, 0.2);
+}
+
+.visit-box h3 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    font-family: var(--font-serif);
+}
+
+.visit-box p {
+    font-size: 1rem;
+    color: #aaa;
+    margin-bottom: 35px;
+    max-width: 320px;
+    line-height: 1.5;
+}
+
+.footer {
+    background-color: var(--dark-blue);
+    /* Use a cor de fundo do seu site */
+    padding: 40px 0 20px;
+    border-top: 1px solid rgba(201, 187, 187, 0.873);
+    /* Aquela linha fina que aparece no print */
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    /* Empurra um para cada lado */
+    align-items: center;
+    /* Alinha verticalmente no centro */
+    flex-wrap: wrap;
+    /* Permite quebrar linha no celular */
+    gap: 20px;
+}
+
+.footer-logo img {
+    max-width: 180px;
+    /* Ajuste o tamanho do seu logo conforme necessário */
+    height: auto;
+}
+
+.footer-copy p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Estilização das Redes Sociais no Footer Inferior */
+.social-links-list {
+    display: flex;
+    flex-direction:row;
+    gap: 12px;
+}
+
+.social-link-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: 0.3s ease;
+}
+
+.social-link-item i {
+    width: 35px;
+    height: 35px;
+    background: rgba(211, 47, 47, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: var(--red-primary);
+    font-size: 1.1rem;
+}
+
+
+.social-links-list a:hover:nth-child(1) { color: #E1306C; } /* Instagram */
+.social-links-list a:hover:nth-child(2) { color: #1877F2; } /* Facebook */
+.social-links-list a:hover:nth-child(3) { color: #25D366; } /* WhatsApp */
+
+/* Ajuste Responsivo para Celular */
+@media (max-width: 992px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+    .footer-social {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+/* Ajuste para celular */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        /* No celular, um fica em cima do outro */
+        text-align: center;
+    }
+}
+
+/* Responsividade Ajustada */
+@media (max-width: 992px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .contato-info h2 {
+        font-size: 2.2rem;
+    }
+
+    .visit-box {
+        padding: 40px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .copyright-bar {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+}
